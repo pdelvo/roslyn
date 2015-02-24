@@ -14,21 +14,46 @@ namespace Microsoft.CodeAnalysis
 {
     public static class CSharpExtensions
     {
+        /// <summary>
+        /// Checks if the type of the given <see cref="SyntaxToken"/> matches the given <see cref="SyntaxKind"/>.
+        /// </summary>
+        /// <returns>
+        /// True if the syntax kind of <paramref name="token"/> matches <paramref name="kind"/>,
+        /// otherwise false.
+        /// </returns>
         public static bool IsKind(this SyntaxToken token, SyntaxKind kind)
         {
             return token.RawKind == (int)kind;
         }
-
+        /// <summary>
+        /// Checks if the type of the given <see cref="SyntaxTrivia"/> matches the given <see cref="SyntaxKind"/>.
+        /// </summary>
+        /// <returns>
+        /// True if the syntax kind of <paramref name="trivia"/> matches <paramref name="kind"/>,
+        /// otherwise false.
+        /// </returns>
         public static bool IsKind(this SyntaxTrivia trivia, SyntaxKind kind)
         {
             return trivia.RawKind == (int)kind;
         }
-
+        /// <summary>
+        /// Checks if the type of the given <see cref="SyntaxNode"/> matches the given <see cref="SyntaxKind"/>.
+        /// </summary>
+        /// <returns>
+        /// True if the syntax kind of <paramref name="node"/> matches <paramref name="kind"/>,
+        /// otherwise false.
+        /// </returns>
         public static bool IsKind(this SyntaxNode node, SyntaxKind kind)
         {
             return node?.RawKind == (int)kind;
         }
-
+        /// <summary>
+        /// Checks if the type of the given <see cref="SyntaxNodeOrToken"/> matches the given <see cref="SyntaxKind"/>.
+        /// </summary>
+        /// <returns>
+        /// True if the syntax kind of <paramref name="nodeOrToken"/> matches <paramref name="kind"/>,
+        /// otherwise false.
+        /// </returns>
         public static bool IsKind(this SyntaxNodeOrToken nodeOrToken, SyntaxKind kind)
         {
             return nodeOrToken.RawKind == (int)kind;
@@ -143,55 +168,129 @@ namespace Microsoft.CodeAnalysis.CSharp
             return unchecked((uint)(rawKind - FirstVisualBasicKind)) > (FirstCSharpKind - 1 - FirstVisualBasicKind);
         }
 
+        /// <summary>
+        /// Returns the kind of this <see cref="SyntaxToken"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="SyntaxKind"/> of this <see cref="SyntaxToken"/> if it's a C# token
+        /// or <see cref="SyntaxKind.None"/> if it is not.
+        /// </returns>
         public static SyntaxKind Kind(this SyntaxToken token)
         {
             var rawKind = token.RawKind;
             return IsCSharpKind(rawKind) ? (SyntaxKind)rawKind : SyntaxKind.None;
         }
 
+        /// <summary>
+        /// Returns the kind of this <see cref="SyntaxTrivia"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="SyntaxKind"/> of this <see cref="SyntaxTrivia"/> if it's a C# token
+        /// or <see cref="SyntaxKind.None"/> if it is not.
+        /// </returns>
         public static SyntaxKind Kind(this SyntaxTrivia trivia)
         {
             var rawKind = trivia.RawKind;
             return IsCSharpKind(rawKind) ? (SyntaxKind)rawKind : SyntaxKind.None;
         }
 
+        /// <summary>
+        /// Returns the kind of this <see cref="SyntaxNode"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="SyntaxKind"/> of this <see cref="SyntaxNode"/> if it's a C# token
+        /// or <see cref="SyntaxKind.None"/> if it is not.
+        /// </returns>
+        /// <exception cref="NullReferenceException"><paramref name="node"/> is null.</exception>
         public static SyntaxKind Kind(this SyntaxNode node)
         {
             var rawKind = node.RawKind;
             return IsCSharpKind(rawKind) ? (SyntaxKind)rawKind : SyntaxKind.None;
         }
 
+        /// <summary>
+        /// Returns the kind of this <see cref="SyntaxNodeOrToken"/>.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="SyntaxKind"/> of this <see cref="SyntaxNodeOrToken"/> if it's a C# token
+        /// or <see cref="SyntaxKind.None"/> if it is not.
+        /// </returns>
         public static SyntaxKind Kind(this SyntaxNodeOrToken nodeOrToken)
         {
             var rawKind = nodeOrToken.RawKind;
             return IsCSharpKind(rawKind) ? (SyntaxKind)rawKind : SyntaxKind.None;
         }
 
+        /// <summary>
+        /// Checks if the given <see cref="SyntaxToken"/> represents a keyword.
+        /// This includes both reserved and contextual keywords.
+        /// </summary>
+        /// <returns>
+        /// true, if the given <see cref="SyntaxToken"/> represents a reserved or contextual keyword,
+        /// otherwise false.
+        /// </returns>
         public static bool IsKeyword(this SyntaxToken token)
         {
             return SyntaxFacts.IsKeywordKind(token.Kind());
         }
 
+        /// <summary>
+        /// Checks if the given <see cref="SyntaxToken"/> represents a contextual keyword.
+        /// </summary>
+        /// <returns>
+        /// true, if the given <see cref="SyntaxToken"/> represents a contextual keyword,
+        /// otherwise false.
+        /// </returns>
         public static bool IsContextualKeyword(this SyntaxToken token)
         {
             return SyntaxFacts.IsContextualKeyword(token.Kind());
         }
 
+        /// <summary>
+        /// Checks if the given <see cref="SyntaxToken"/> represents a reserved keyword.
+        /// </summary>
+        /// <returns>
+        /// true, if the given <see cref="SyntaxToken"/> represents a reserved keyword,
+        /// otherwise false.
+        /// </returns>
         public static bool IsReservedKeyword(this SyntaxToken token)
         {
             return SyntaxFacts.IsReservedKeyword(token.Kind());
         }
 
+        /// <summary>
+        /// Checks if the given <see cref="SyntaxToken"/> represents a verbatim string literal.
+        /// </summary>
+        /// <returns>
+        /// true, if the given <see cref="SyntaxToken"/> represents a verbatim string literal,
+        /// otherwise false.
+        /// </returns>
         public static bool IsVerbatimStringLiteral(this SyntaxToken token)
         {
             return token.IsKind(SyntaxKind.StringLiteralToken) && token.Text.Length > 0 && token.Text[0] == '@';
         }
 
+        /// <summary>
+        /// Checks if the given <see cref="SyntaxToken"/> represents a verbatim identifier.
+        /// </summary>
+        /// <returns>
+        /// true, if the given <see cref="SyntaxToken"/> represents a verbatim identifier,
+        /// otherwise false.
+        /// </returns>
         public static bool IsVerbatimIdentifier(this SyntaxToken token)
         {
             return token.IsKind(SyntaxKind.IdentifierToken) && token.Text.Length > 0 && token.Text[0] == '@';
         }
-
+        /// <summary>
+        /// Determines the <see cref="VarianceKind"/> expressed by the given <see cref="SyntaxToken"/>.
+        /// </summary>
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><see cref="VarianceKind.In"/> if the <see cref="Kind(SyntaxToken)"/> of <paramref name="node"/> is <see cref="SyntaxKind.InKeyword"/></item>
+        /// <item><see cref="VarianceKind.Out"/> if the <see cref="Kind(SyntaxToken)"/> of <paramref name="node"/> is <see cref="SyntaxKind.OutKeyword"/></item>
+        /// <item>otherwise <see cref="VarianceKind.None"/></item>
+        /// </list>
+        /// </returns>
         public static VarianceKind VarianceKindFromToken(this SyntaxToken node)
         {
             switch (node.Kind())
@@ -377,6 +476,17 @@ namespace Microsoft.CodeAnalysis.CSharp
         // compilation, while the other method needs a bindings object to determine what bound node
         // an expression syntax binds to.  Perhaps when we document these methods we should explain
         // where a user can find the other.
+        /// <summary>
+        /// Determines what type of conversion, if any, would be used if <paramref name="source"/> was
+        /// converted to <paramref name="destination"/>.
+        /// </summary>
+        /// <param name="compilation">The compilation this conversion should be performed in.</param>
+        /// <param name="source">The source type symbol.</param>
+        /// <param name="destination">The destination type symbol.</param>
+        /// <returns>
+        /// A <see cref="Conversion"/> that summarizes whether a conversion is allowed, 
+        /// and if so, which kind of conversion (and in some cases, the associated symbol).
+        /// </returns>
         public static Conversion ClassifyConversion(this Compilation compilation, ITypeSymbol source, ITypeSymbol destination)
         {
             var cscomp = compilation as CSharpCompilation;
