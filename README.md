@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/dotnet/swag/master/roslyn/roslyn_kuhlenh.png" alt="Roslyn" style="width: 250px;"/>
+
 ## Welcome to the .NET Compiler Platform ("Roslyn")
 
 ||Windows - Debug|Windows - Release|Linux|Mac OSX|
