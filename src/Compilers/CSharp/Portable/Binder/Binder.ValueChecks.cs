@@ -194,6 +194,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                                indexerAccess.ArgumentRefKindsOpt,
                                indexerAccess.Expanded,
                                indexerAccess.ArgsToParamsOpt,
+                               indexerAccess.OriginalIndexersOpt,
                                indexerAccess.BinderOpt,
                                useSetterForDefaultArgumentGeneration: true,
                                type: indexerAccess.Type);

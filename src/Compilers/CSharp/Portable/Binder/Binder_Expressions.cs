@@ -6815,6 +6815,7 @@ namespace Microsoft.CodeAnalysis.CSharp
                     argumentRefKinds,
                     isExpanded,
                     argsToParams,
+                    default,
                     this,
                     false,
                     property.Type,

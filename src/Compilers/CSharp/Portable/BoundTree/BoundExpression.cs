@@ -156,17 +156,6 @@ namespace Microsoft.CodeAnalysis.CSharp
             get { return this.Indexer; }
         }
 
-        /// <summary>
-        /// The set of indexer symbols from which this call's indexer was chosen. 
-        /// Only kept in the tree if the call was an error and overload resolution
-        /// was unable to choose a best indexer.
-        /// </summary>
-        // (Note that this property is not automatically generated; we typically
-        // will not be visiting or rewriting this error-recovery information.)
-        //
-        // DevDiv 1087283 tracks deciding whether or not to refactor this into BoundNodes.xml.
-        public ImmutableArray<PropertySymbol> OriginalIndexersOpt { get; private set; }
-
         public override LookupResultKind ResultKind
         {
             get

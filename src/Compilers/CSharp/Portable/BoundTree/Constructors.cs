@@ -176,13 +176,11 @@ namespace Microsoft.CodeAnalysis.CSharp
                 refKinds,
                 expanded: false,
                 argsToParamsOpt: default(ImmutableArray<int>),
+                originalIndexersOpt: originalIndexers,
                 binderOpt: null,
                 useSetterForDefaultArgumentGeneration: false,
                 type: indexer.Type,
-                hasErrors: true)
-            {
-                OriginalIndexersOpt = originalIndexers
-            };
+                hasErrors: true);
         }
     }
 
